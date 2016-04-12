@@ -97,6 +97,7 @@ for (FileDescription temp : results) {
 }
 
 writer.close();
+
 	}catch(IOException e){
       System.out.print("Exception");
    }
