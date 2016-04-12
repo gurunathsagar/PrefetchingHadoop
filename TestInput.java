@@ -55,6 +55,17 @@ File[] files = new File("/home/hduser/input_file").listFiles();
 //If this pathname does not denote a directory, then listFiles() returns null. 
 OutputStream out = null;
 
+try {
+
+File listFile = new File(".", "existing_files.txt");
+
+if( !listFile.exists() )
+	{
+		listFile.createNewFile();
+		System.out.println("new gen");
+	}
+
+
 for (File file : files) {
     if (file.isFile()) {
 	results.add( new FileDescription(file.getName(), file.length()));
@@ -101,7 +112,12 @@ writer.close();
 	}catch(IOException e){
       System.out.print("Exception");
    }
-}
-}
+
+	}catch(IOException e){
+      System.out.print("Exception");
+   }
+
+} // main
+} // class
 
 
