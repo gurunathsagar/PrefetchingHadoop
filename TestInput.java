@@ -50,8 +50,10 @@ inputDir = args[0];
 outputDir = args[1];
 
 List<FileDescription> results = new ArrayList<FileDescription>();
+HashMap<String, Integer> presentFiles = new HashMap<String, Integer>();
 
-File[] files = new File("/home/hduser/input_file").listFiles();
+
+File[] files = new File(args[0]).listFiles();
 //If this pathname does not denote a directory, then listFiles() returns null. 
 OutputStream out = null;
 
@@ -62,13 +64,21 @@ File listFile = new File(".", "existing_files.txt");
 if( !listFile.exists() )
 	{
 		listFile.createNewFile();
-		System.out.println("new gen");
 	}
 
+BufferedReader br = new BufferedReader(new FileReader(listFile));
+    String line;
+    while ((line = br.readLine()) != null) {
+       // process the line.
+	presentFiles.put(line, 1);
+    }
+br.close();
 
 for (File file : files) {
-    if (file.isFile()) {
+    if (file.isFile() && !(presentFiles.containsKey(file.getName()))) {
+		
 	results.add( new FileDescription(file.getName(), file.length()));
+	//System.out.println(" This file not present: " + file.getName());
     }
 }
 	
@@ -93,20 +103,22 @@ String str = "#!/bin/bash" + "\n\n";
 FileWriter fw = new FileWriter(newFile.getAbsoluteFile());
 BufferedWriter writer = new BufferedWriter(fw);
 
+
+FileWriter fw2 = new FileWriter(listFile.getAbsoluteFile(), true);
+BufferedWriter writer2 = new BufferedWriter(fw2);
+
 writer.write(str);
 //	out = new FileOutputStream("output.txt");
 //		out.write(str);
 	
 for (FileDescription temp : results) {
 		//System.out.println(temp.getName());	
-	if(temp.tag==0)
-		{
-			writer.write( "hadoop fs -put " + inputDir + "/"+ temp.getName() + " " + outputDir + "\n");
-			temp.tag=1;
-		}
+		writer.write( "hadoop fs -put " + inputDir + "/"+ temp.getName() + " " + outputDir + "\n");
+		writer2.write(temp.getName() + "\n");
 	
 }
 
+writer2.close();
 writer.close();
 
 	}catch(IOException e){
