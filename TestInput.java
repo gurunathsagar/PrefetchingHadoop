@@ -39,11 +39,19 @@ public String toString()
 public class TestInput
 {
 
+static String inputDir = null;
+static String outputDir = null;
+
 public static void main(String []args)
 {
+
+
+inputDir = args[0];
+outputDir = args[1];
+
 List<FileDescription> results = new ArrayList<FileDescription>();
 
-File[] files = new File(".").listFiles();
+File[] files = new File("/home/hduser/input_file").listFiles();
 //If this pathname does not denote a directory, then listFiles() returns null. 
 OutputStream out = null;
 
@@ -67,7 +75,7 @@ Collections.sort(results, new Comparator<FileDescription>() {
 
 try
 {
-File newFile = new File(".", "output.txt");
+File newFile = new File(".", "output.sh");
 newFile.createNewFile();
 String str = "#!/bin/bash" + "\n\n";
 
@@ -82,7 +90,7 @@ for (FileDescription temp : results) {
 		//System.out.println(temp.getName());	
 	if(temp.tag==0)
 		{
-			writer.write( "hadoop fs -put " + temp.getName() + " /user/gurunath/input " + "\n");
+			writer.write( "hadoop fs -put " + inputDir + "/"+ temp.getName() + " " + outputDir + "\n");
 			temp.tag=1;
 		}
 	
