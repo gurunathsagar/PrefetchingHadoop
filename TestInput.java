@@ -15,6 +15,16 @@ FileDescription(String name, long length)
 	this.length=length;
 }
 
+public String getName()
+{
+	return name;
+}
+
+public long getVal()
+{
+	return length;
+}
+
 
 public String toString()
 {
@@ -52,8 +62,8 @@ Collections.sort(results, new Comparator<FileDescription>() {
 });
 
 for (FileDescription temp : results) {
-			System.out.println(temp);
-		}
+		System.out.println(temp.getName());	
+}
 
 }
 }
