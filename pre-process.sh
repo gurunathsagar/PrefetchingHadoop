@@ -14,8 +14,8 @@ INP=$1
 OUT=$2
 DIR=`hdfs dfs -count -q $2 | sed 's/|/ /' | awk '{print $4}'`
 
-javac TestInput.java
-java TestInput $INP $OUT $DIR
+javac SortDescending.java
+java SortDescending $INP $OUT $DIR
 
 status=$?
 
