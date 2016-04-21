@@ -106,7 +106,7 @@ public class TestInput
 		fileCount = totalSize/dirSpace; 	// This is to obtain the number of processbatch_ files created.
 		fileCount++;
 
-		System.out.println("totalSize = " + totalSize);
+		//System.out.println("totalSize = " + totalSize);
 
 		try
 		{
@@ -134,11 +134,11 @@ public class TestInput
 				//System.out.println(temp.getName());	
 				dataSize += temp.getVal();
 
-				System.out.println("dirSpace = " + dirSpace + "Datasize = " + dataSize);
+				//System.out.println("dirSpace = " + dirSpace + "Datasize = " + dataSize);
 
 				if(dirSpace <= dataSize)			// If the space in HDFS dir is less than or equal to the sum of file sizes here, then open a new file.
 				{
-					System.out.println("Making new file.");
+					//System.out.println("Making new file.");
 
 					writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir);
 					writer.close();
