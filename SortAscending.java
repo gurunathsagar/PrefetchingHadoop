@@ -36,7 +36,7 @@ class FileDescription
 
 }
 
-public class TestInput1
+public class SortAscending
 {
 
 	static String inputDir = null;
