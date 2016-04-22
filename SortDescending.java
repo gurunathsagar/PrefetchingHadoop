@@ -36,7 +36,7 @@ class FileDescription
 
 }
 
-public class TestInput
+public class SortDescending
 {
 
 	static String inputDir = null;
@@ -53,6 +53,7 @@ public class TestInput
 		int fileCount;
 		int dirSpace;
 		int totalSize=0;
+		int dirCount=1;
 
 		inputDir = args[0];		// input directory name
 		outputDir = args[1];	// output directory
@@ -110,12 +111,12 @@ public class TestInput
 
 		try
 		{
-			File newFile = new File(".", "processbatch_" + String.valueOf(fileCount) + ".sh");
+			File newFile = new File(inputDir, "processbatch_" + String.valueOf(fileCount) + ".sh");
 			fileCount--;
 
 			newFile.createNewFile();
 			String str = "#!/bin/bash" + "\n\n";
-			String strForFiles = "if ~/process/checkFolder.sh '" + outputDir + "'; then\necho found\n\texit 0\nfi\n\n";  // Edit this line to put exact words.
+			String strForFiles = "if ~/process/checkFolder.sh '" + outputDir + "/map-reduce" + String.valueOf(dirCount)  + "'; then\necho found\n\texit 0\nfi\n\n";  // Edit this line to put exact words.
 
 			FileWriter fw = new FileWriter(newFile.getAbsoluteFile());				// Actual writing to the shell script file.
 			BufferedWriter writer = new BufferedWriter(fw);		
@@ -140,9 +141,10 @@ public class TestInput
 				{
 					//System.out.println("Making new file.");
 
-					writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir);
+					writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir+ "/map-reduce" + String.valueOf(dirCount));
 					writer.close();
-					newFile = new File(".", "processbatch_" + String.valueOf(fileCount) + ".sh");
+					dirCount++;
+					newFile = new File(inputDir, "processbatch_" + String.valueOf(fileCount) + ".sh");
 					newFile.createNewFile();
 					fileCount--;
 					
@@ -155,11 +157,11 @@ public class TestInput
 				}
 
 				//System.out.println(" Beginning to write ");
-				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + "/"+ temp.getName() + " " + outputDir + "\n");
+				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + "/"+ temp.getName() + " " + outputDir + "/map-reduce" + String.valueOf(dirCount) + "\n");
 				writer2.write(temp.getName() + "\n");
 			}
 
-			writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir);
+			writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce" + String.valueOf(dirCount));
 			writer2.close();
 			writer.close();
 
