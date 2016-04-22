@@ -140,7 +140,7 @@ public class SortDescending
 				{
 					//System.out.println("Making new file.");
 
-					writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir+ "/map-reduce_" + String.valueOf(fileCount) + "/\n");
+					writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir+ "/map-reduce_" + String.valueOf(fileCount+1) + "/\n");
 					writer.close();
 					dirCount++;
 					newFile = new File(inputDir, "processbatch_" + String.valueOf(fileCount) + ".sh");
@@ -156,11 +156,11 @@ public class SortDescending
 				}
 
 				//System.out.println(" Beginning to write ");
-				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + "/"+ temp.getName() + " " + outputDir + "/map-reduce_" + String.valueOf(fileCount) + "/\n");
+				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + "/"+ temp.getName() + " " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1) + "/\n");
 				writer2.write(temp.getName() + "\n");
 			}
 
-			writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce_" + String.valueOf(fileCount));
+			writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1));
 			writer2.close();
 			writer.close();
 
