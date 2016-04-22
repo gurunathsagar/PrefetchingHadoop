@@ -115,7 +115,6 @@ public class SortDescending
 
 			newFile.createNewFile();
 			String str = "#!/bin/bash" + "\n\n";
-			String strForFiles = "if ~/process/checkFolder.sh '" + outputDir + "/map-reduce_" + String.valueOf(fileCount)  + "'; then\necho found\n\texit 0\nfi\n\n";  // Edit this line to put exact words.
 
 			FileWriter fw = new FileWriter(newFile.getAbsoluteFile());				// Actual writing to the shell script file.
 			BufferedWriter writer = new BufferedWriter(fw);		
@@ -148,7 +147,9 @@ public class SortDescending
 					fileCount--;
 					
 					fw = new FileWriter(newFile.getAbsoluteFile());
-					writer = new BufferedWriter(fw);		
+					writer = new BufferedWriter(fw);
+
+					String strForFiles = "if ~/process/checkFolder.sh '" + outputDir + "/map-reduce_" + String.valueOf(fileCount+1)  + "'; then\necho found\n\texit 0\nfi\n\n";  // Edit this line to put exact words.		
 					
 					writer.write(str);
 					writer.write(strForFiles);
