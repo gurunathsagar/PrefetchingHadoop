@@ -115,7 +115,7 @@ public class SortDescending
 
 			newFile.createNewFile();
 			String str = "#!/bin/bash" + "\n\n";
-			String strForFiles = "if ~/process/checkFolder.sh '" + outputDir + "/map-reduce_" + String.valueOf(dirCount)  + "'; then\necho found\n\texit 0\nfi\n\n";  // Edit this line to put exact words.
+			String strForFiles = "if ~/process/checkFolder.sh '" + outputDir + "/map-reduce_" + String.valueOf(fileCount)  + "'; then\necho found\n\texit 0\nfi\n\n";  // Edit this line to put exact words.
 
 			FileWriter fw = new FileWriter(newFile.getAbsoluteFile());				// Actual writing to the shell script file.
 			BufferedWriter writer = new BufferedWriter(fw);		
@@ -140,7 +140,7 @@ public class SortDescending
 				{
 					//System.out.println("Making new file.");
 
-					writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir+ "/map-reduce_" + String.valueOf(dirCount) + "/\n");
+					writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir+ "/map-reduce_" + String.valueOf(fileCount) + "/\n");
 					writer.close();
 					dirCount++;
 					newFile = new File(inputDir, "processbatch_" + String.valueOf(fileCount) + ".sh");
@@ -156,11 +156,11 @@ public class SortDescending
 				}
 
 				//System.out.println(" Beginning to write ");
-				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + "/"+ temp.getName() + " " + outputDir + "/map-reduce_" + String.valueOf(dirCount) + "/\n");
+				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + "/"+ temp.getName() + " " + outputDir + "/map-reduce_" + String.valueOf(fileCount) + "/\n");
 				writer2.write(temp.getName() + "\n");
 			}
 
-			writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce_" + String.valueOf(dirCount));
+			writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce_" + String.valueOf(fileCount));
 			writer2.close();
 			writer.close();
 
