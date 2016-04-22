@@ -156,11 +156,11 @@ public class SortDescending
 				}
 
 				//System.out.println(" Beginning to write ");
-				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + "/"+ temp.getName() + " " + outputDir + "/map-reduce" + String.valueOf(dirCount) + "/\n");
+				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + "/"+ temp.getName() + " " + outputDir + "/map-reduce_" + String.valueOf(dirCount) + "/\n");
 				writer2.write(temp.getName() + "\n");
 			}
 
-			writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce" + String.valueOf(dirCount));
+			writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce_" + String.valueOf(dirCount));
 			writer2.close();
 			writer.close();
 
