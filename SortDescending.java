@@ -56,9 +56,9 @@ public class SortDescending
 		inputDir = args[0];		// input directory name
 		outputDir = args[1];	// output directory
 		dirSpace = Integer.parseInt(args[2]); 	// Space in directory
-		dirSpace /= 2;
-		dirSpace -= 200;
-
+		//dirSpace /= 2;
+		//dirSpace -= 200;
+		
 		File[] files = new File(args[0]).listFiles();
 		//If this pathname does not denote a directory, then listFiles() returns null. 
 		File listFile = new File(inputDir, "existing_files.txt");

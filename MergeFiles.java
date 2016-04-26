@@ -174,7 +174,6 @@ public class MergeFiles
 
 			newFile.createNewFile();
 			String str = "#!/bin/bash" + "\n\n";
-			String strForFiles = "if ~/process/checkFolder.sh '" + outputDir + "/map-reduce" + String.valueOf(dirCount)  + "'; then\necho found\n\texit 0\nfi\n\n";  // Edit this line to put exact words.
 
 			FileWriter fw = new FileWriter(newFile.getAbsoluteFile());				// Actual writing to the shell script file.
 			BufferedWriter writer = new BufferedWriter(fw);		
@@ -197,7 +196,6 @@ public class MergeFiles
 				if(dirSpace <= dataSize)			// If the space in HDFS dir is less than or equal to the sum of file sizes here, then open a new file.
 				{
 					//System.out.println("Making new file.");
-
 					writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce" + String.valueOf(dirCount) );
 					writer.close();
 					dirCount++;
@@ -206,6 +204,7 @@ public class MergeFiles
 					newFile.createNewFile();
 					fileCount--;
 					
+					String strForFiles = "if ~/process/checkFolder.sh '" + outputDir + "/map-reduce" + String.valueOf(fileCount+1)  + "'; then\necho found\n\texit 0\nfi\n\n";  // Edit this line to put exact words.
 					fw = new FileWriter(newFile.getAbsoluteFile());
 					writer = new BufferedWriter(fw);		
 					
@@ -215,12 +214,12 @@ public class MergeFiles
 				}
 
 				//System.out.println(" Beginning to write ");
-				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + "/" + temp.getName() + " " + outputDir + "/map-reduce" + String.valueOf(dirCount) + "\n");
+				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + "/" + temp.getName() + " " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1) + "\n");
 				writer.write( "rm " + inputDir + "/" + temp.getName() + "\n");
 				writer2.write(temp.getName() + "\n");
 			}
 
-			writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce" + String.valueOf(dirCount) );
+			writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce_" + String.valueOf(dirCount) );
 			writer2.close();
 			writer.close();
 
