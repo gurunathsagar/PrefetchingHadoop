@@ -60,8 +60,8 @@ public class MergeFiles
 		inputDir = args[0];		// input directory name
 		outputDir = args[1];	// output directory
 		dirSpace = Integer.parseInt(args[2]); 	// Space in directory
-		dirSpace /= 2;
-		dirSpace -= 200;
+		/*dirSpace /= 2;
+		dirSpace -= 200;*/
 		File listFile = new File(inputDir, "existing_files.txt");
 
 		File[] files = new File(args[0]).listFiles();
@@ -134,10 +134,10 @@ public class MergeFiles
 				writeSize=0;
 
 				writeFiles = new File(inputDir, "writeFile"+String.valueOf(count+2));
-				count++;
 				writerFiles = new FileWriter(writeFiles.getAbsoluteFile(), true);
 				bw = new BufferedWriter(writerFiles);
 				fileDesc = new FileDescription("writeFile"+String.valueOf(count+2), 0);
+				count++;
 			}
 			//System.out.println(temp.getName());
 
@@ -196,7 +196,7 @@ public class MergeFiles
 				if(dirSpace <= dataSize)			// If the space in HDFS dir is less than or equal to the sum of file sizes here, then open a new file.
 				{
 					//System.out.println("Making new file.");
-					writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce" + String.valueOf(dirCount) );
+					writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1) );
 					writer.close();
 					dirCount++;
 
@@ -204,7 +204,7 @@ public class MergeFiles
 					newFile.createNewFile();
 					fileCount--;
 					
-					String strForFiles = "if ~/process/checkFolder.sh '" + outputDir + "/map-reduce" + String.valueOf(fileCount+1)  + "'; then\necho found\n\texit 0\nfi\n\n";  // Edit this line to put exact words.
+					String strForFiles = "if ~/process/checkFolder.sh '" + outputDir + "/map-reduce_" + String.valueOf(fileCount+1)  + "'; then\necho found\n\texit 0\nfi\n\n";  // Edit this line to put exact words.
 					fw = new FileWriter(newFile.getAbsoluteFile());
 					writer = new BufferedWriter(fw);		
 					
@@ -214,12 +214,12 @@ public class MergeFiles
 				}
 
 				//System.out.println(" Beginning to write ");
-				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + "/" + temp.getName() + " " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1) + "\n");
-				writer.write( "rm " + inputDir + "/" + temp.getName() + "\n");
+				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + temp.getName() + " " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1) + "\n");
+				writer.write( "rm " + inputDir + temp.getName() + "\n");
 				writer2.write(temp.getName() + "\n");
 			}
 
-			writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce_" + String.valueOf(dirCount) );
+			writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1) );
 			writer2.close();
 			writer.close();
 
