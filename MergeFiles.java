@@ -196,7 +196,7 @@ public class MergeFiles
 				if(dirSpace <= dataSize)			// If the space in HDFS dir is less than or equal to the sum of file sizes here, then open a new file.
 				{
 					//System.out.println("Making new file.");
-					writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1) );
+					writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1) + "/");
 					writer.close();
 					dirCount++;
 
@@ -214,12 +214,12 @@ public class MergeFiles
 				}
 
 				//System.out.println(" Beginning to write ");
-				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + temp.getName() + " " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1) + "\n");
+				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + temp.getName() + " " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1) + "/\n");
 				writer.write( "rm " + inputDir + temp.getName() + "\n");
 				writer2.write(temp.getName() + "\n");
 			}
 
-			writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1) );
+			writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1) + "/");
 			writer2.close();
 			writer.close();
 
