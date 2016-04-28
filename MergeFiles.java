@@ -130,7 +130,7 @@ public class MergeFiles
 				
 			//System.out.println("file size exceeded" + count+2);
 				bw.close();
-				finalResults.add(fileDesc);
+				finalResults.add(temp);
 				writeSize=0;
 
 				writeFiles = new File(inputDir, "writeFile"+String.valueOf(count+2));
