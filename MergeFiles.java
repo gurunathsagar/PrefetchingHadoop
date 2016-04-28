@@ -215,7 +215,7 @@ public class MergeFiles
 
 				//System.out.println(" Beginning to write ");
 				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + temp.getName() + " " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1) + "/\n");
-				writer.write( "rm " + inputDir + temp.getName() + "\n");
+				writer.write( "rm " + inputDir + "/" + temp.getName() + "\n");
 				writer2.write(temp.getName() + "\n");
 			}
 
