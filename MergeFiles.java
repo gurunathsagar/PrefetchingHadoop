@@ -122,6 +122,9 @@ public class MergeFiles
 		BufferedWriter bw = new BufferedWriter(writerFiles);
 		FileDescription fileDesc = new FileDescription("writeFile1", 0);
 
+		FileWriter fw2 = new FileWriter(listFile.getAbsoluteFile(), true);              // Writer to write to files maintaining list of transferred files.
+        BufferedWriter writer2 = new BufferedWriter(fw2);
+
 		for (FileDescription temp : results){
 
 			if(writeSize + temp.getVal() >= dirSpace)
@@ -130,7 +133,7 @@ public class MergeFiles
 				
 			//System.out.println("file size exceeded" + count+2);
 				bw.close();
-				finalResults.add(temp);
+				finalResults.add(fileDesc);
 				writeSize=0;
 
 				writeFiles = new File(inputDir, "writeFile"+String.valueOf(count+2));
@@ -158,7 +161,9 @@ public class MergeFiles
 			//bw.write(fullFile.toString());
 			writeSize += temp.getVal();
 			fileDesc.putVal(writeSize);
+			writer2.write(temp.getName() + "\n");
 		}
+		writer2.close();
 		finalResults.add(fileDesc);			
 		bw.close();
 
@@ -216,7 +221,7 @@ public class MergeFiles
 				//System.out.println(" Beginning to write ");
 				writer.write( "/home/hduser/hadoop/bin/hadoop fs -put " + inputDir + "/"  + temp.getName() + " " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1) + "/\n");
 				writer.write( "rm " + inputDir + "/" + temp.getName() + "\n");
-				writer2.write(temp.getName() + "\n");
+				//writer2.write(temp.getName() + "\n");
 			}
 
 			writer.write("/home/hduser/hadoop/bin/hadoop fs -chmod -R 777 " + outputDir + "/map-reduce_" + String.valueOf(fileCount+1) + "/");
