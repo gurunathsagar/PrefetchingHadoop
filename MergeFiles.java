@@ -72,6 +72,9 @@ public class MergeFiles
 			if( !listFile.exists() )
 				{
 					listFile.createNewFile();
+				}else
+				{
+					System.exit(0);
 				}
 
 			BufferedReader br = new BufferedReader(new FileReader(listFile));
